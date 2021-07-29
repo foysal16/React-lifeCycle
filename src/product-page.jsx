@@ -1,8 +1,63 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import CircularLoader from './circular';
 
-class ProductPage extends Component {
-    state = {
+
+const ProductPage = ({products , selectProduct}) =>{
+
+
+  const [mainLoader, setIsLoader] = useState(true)
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoader(false);
+    }, 1000)
+  }, [])
+
+
+
+  return (
+    <>
+    {
+      mainLoader ? <CircularLoader /> : (
+        <div>
+            {products.map((product) => {
+                return <div 
+                style={{
+                    marginBottom: '10px',
+                    border: '1px solid red',
+                    padding: '10px'
+                }}
+
+
+
+                onClick ={() =>selectProduct(product)}>
+                  
+                    
+                    <p>Product Name: {product.name}</p>
+                    <p>price: {product.price}</p>
+                </div>
+            })}
+        </div>)
+
+    }
+    
+    
+    
+    </>
+    
+  )
+}
+
+export default ProductPage;
+
+
+
+
+
+
+
+/*class ProductPage extends Component {
+      state = {
         loading: true,
         timeout: null,
       };
@@ -48,4 +103,4 @@ class ProductPage extends Component {
 }
 
 
-export default ProductPage;
+export default ProductPage;*/

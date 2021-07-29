@@ -1,10 +1,73 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import ProductPage from './product-page';
 import ProdcutDetails from './product-details';
 import CircularLoader from './circular';
 
+const App = () => {
+  const [mainLoader, setIsLoader] = useState(true)
+  const [CurrentProduct, setCurrentProduct] = useState(null)
+  const [products, setProductList] = useState([
+    {
+      name: 'Iphone',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc fringilla eget nisl quis rutrum. In tempus sapien odio',
+      price: '120000',
+      category: 'SmartPhone',
+    },
+    {
+      name: 'Samsung',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc fringilla eget nisl quis rutrum. In tempus sapien odio',
+      price: '80000',
+      category: 'SmartPhone',
+    },
+    {
+      name: 'One Plus 8',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc fringilla eget nisl quis rutrum. In tempus sapien odio',
+      price: '60000',
+      category: 'SmartPhone',
+    },
+  ])
 
-class App extends Component {
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoader(false);
+    }, 1000)
+  }, [])
+
+
+  const selectProduct = (data) => {
+    setCurrentProduct(data);
+  }
+
+  const backToList = () => {
+    setCurrentProduct(null);
+  }
+
+  return (
+    <div
+      style={{
+        padding: '100px'
+      }}
+    >
+      {CurrentProduct ? (
+        <ProdcutDetails CurrentProduct={CurrentProduct} backToList={backToList} />
+      )
+        :
+        (
+          <div>
+            {mainLoader ? <CircularLoader /> : (<ProductPage products={products} selectProduct={selectProduct} />)}
+          </div>
+        )}
+
+    </div>
+
+
+  )
+
+}
+export default App;
+
+
+/*class App extends Component {
   state = {
     productlist: [
       {
@@ -84,4 +147,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default App; */

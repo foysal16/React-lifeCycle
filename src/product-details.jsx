@@ -1,34 +1,32 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import CircularLoader from './circular';
 
-class ProdcutDetails extends Component {
-  state = {
-    loading: true,
-    timeout: null,
-  };
-  componentDidMount() {
-    this.timeout = setTimeout(() => {
-      this.setState({ loading: false });
-    }, 1000); // 3 seconds
-  }
 
-  componentWillUnmount() {
-    if (this.timeout) {
-      clearTimeout(this.timeout);
-    }
-  }
+const ProdcutDetails = ({CurrentProduct , backToList}) =>{
+  const [mainLoader, setIsLoader] = useState(true)
 
-  render() {
-    return(this.state.loading ? <CircularLoader /> : (<div >
-                <p>Product Name: {this.props.currentProduct?.name}</p>
-                <p>Product description: {this.props.currentProduct?.description}</p>
-                <p>Price: {this.props.currentProduct?.price}</p>
-                <p>Category: {this.props.currentProduct?.category}</p>
-                <button onClick={this.props.backToList}>Back to List</button>
-            </div>)
-        )     
-  }
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoader(false);
+    }, 1000)
+  }, [])
+
+    return(
+      <>
+          { mainLoader ? <CircularLoader /> : (<div >
+          <p>Product Name: {CurrentProduct?.name}</p>
+          <p>Product description: {CurrentProduct?.description}</p>
+          <p>Price: {CurrentProduct?.price}</p>
+          <p>Category: {CurrentProduct?.category}</p>
+          <button onClick={backToList}>Back to List</button>
+        </div>
+       ) }
+     </>
+    )
+
 }
 
-
 export default ProdcutDetails;
+
+
+
